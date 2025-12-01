@@ -83,31 +83,29 @@ Contatos importantes:
 """
 
 
-# --- GERADOR DE PDF ---
+# --- GERADOR DE PDF (CORRIGIDO) ---
 def gerar_pdf(nome, plano_texto):
     pdf = FPDF()
     pdf.add_page()
 
-    largura = pdf.w - 2 * pdf.l_margin  # largura útil da página
+    largura = pdf.w - 2 * pdf.l_margin
 
     pdf.set_font("helvetica", size=14)
-    pdf.set_x(pdf.l_margin)
     pdf.multi_cell(largura, 10, "Plano de Acao - DPOC\n")
 
     pdf.set_font("helvetica", size=12)
-    pdf.set_x(pdf.l_margin)
     pdf.multi_cell(largura, 8, f"Nome: {nome}")
-    pdf.set_x(pdf.l_margin)
     pdf.multi_cell(largura, 8, f"Data: {datetime.now().strftime('%d/%m/%Y %H:%M')}\n")
 
     pdf.set_font("helvetica", size=11)
-    pdf.set_x(pdf.l_margin)
     pdf.multi_cell(largura, 6, plano_texto)
 
-    return pdf.output(dest="S")
+    # O FPDF retorna string → convertendo para bytes com encoding latin-1
+    pdf_str = pdf.output(dest="S")
+    return pdf_str.encode("latin-1")
 
 
-# --- ESTILO DO BOTÃO VERMELHO ---
+# --- ESTILO DO BOTÃO ---
 st.markdown("""
     <style>
     div.stButton > button:first-child {
@@ -130,7 +128,7 @@ if gerar:
         st.error("Por favor, preencha o nome antes de gerar o PDF.")
     else:
         plano_texto = gerar_plano(status)
-        pdf_bytes = bytes(gerar_pdf(name, plano_texto))  # converte bytearray para bytes
+        pdf_bytes = gerar_pdf(name, plano_texto)  # já é bytes!
 
         st.success("Plano de ação gerado!")
 
@@ -142,9 +140,9 @@ if gerar:
         )
 
 
-# --- TEXTO FIXO ABAIXO DO BOTÃO ---
+# --- TEXTO FIXO ---
 st.markdown("""
-Para mais informações sobre exacerbação na DPOC, acesse o link:  
+Para mais informações sobre exacerbação na DPOC, acesse:  
 [https://www.instagram.com/estagiariosunicep?igsh=MmwwOXd6OXFpMXA3](https://www.instagram.com/estagiariosunicep?igsh=MmwwOXd6OXFpMXA3)
 """)
 
