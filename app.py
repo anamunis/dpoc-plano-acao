@@ -151,3 +151,4 @@ Para mais informações sobre exacerbação na DPOC, acesse:
 st.markdown("---")
 st.caption("Protótipo comunitário baseado em recomendações GOLD 2024.")
 
+
