@@ -95,7 +95,7 @@ def gerar_pdf(nome, plano_texto):
 
     pdf.set_font("helvetica", size=12)
     pdf.multi_cell(largura, 8, f"Nome: {nome}")
-    pdf.multi_cell(largura, 8, f"Data: {datetime.now().strftime('%d/%m/%Y %H:%M')}\n")
+    pdf.multi_cell(largura, 8, f"Data: {datetime.now().strftime('%d/%m/%Y')}\n")
 
     pdf.set_font("helvetica", size=11)
     pdf.multi_cell(largura, 6, plano_texto)
@@ -150,3 +150,4 @@ Para mais informações sobre exacerbação na DPOC, acesse:
 # --- Rodapé ---
 st.markdown("---")
 st.caption("Protótipo comunitário baseado em recomendações GOLD 2024.")
+
